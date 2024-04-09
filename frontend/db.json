@@ -1,0 +1,99 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Product A",
+      "price": 2000,
+      "description": "Nhu mo ta tren",
+      "image": "https://picsum.photos/id/10/200/300",
+      "quantity": 100,
+      "discount": 30,
+      "featured": false
+    },
+    {
+      "id": "2",
+      "name": "Product B",
+      "price": 6000,
+      "description": "Nhu mo ta tren 22",
+      "image": "https://picsum.photos/id/17/200/300",
+      "quantity": 200,
+      "discount": 20,
+      "featured": true
+    },
+    {
+      "id": "3",
+      "name": "Product 4",
+      "price": 2500,
+      "description": "Nhu mo ta tren ABC ABC",
+      "image": "https://picsum.photos/id/18/200/300",
+      "quantity": 10,
+      "discount": 40,
+      "featured": true
+    },
+    {
+      "id": "4",
+      "name": "Product C",
+      "price": 8000,
+      "description": "Nhu mo ta C",
+      "image": "https://picsum.photos/id/19/200/300",
+      "quantity": 100,
+      "discount": 50,
+      "featured": false
+    },
+    {
+      "id": "65da",
+      "name": "House Coffee & Tea",
+      "price": 1000,
+      "category": "Sofa",
+      "image": "https://static.vinwonders.com/production/banh-trang-nuong-da-lat-1.jpg",
+      "description": "nhu tren",
+      "discount": 1000,
+      "featured": true,
+      "countInStock": 0
+    },
+    {
+      "id": "cfd7",
+      "name": "House Coffee & Tea update",
+      "price": 15000,
+      "category": "Chair",
+      "image": "https://images.foody.vn/res/g116/1150582/prof/s1242x600/foody-upload-api-foody-mobile-ca-9e23d66b-230531084714.jpg",
+      "description": "nhu tren",
+      "discount": 1000,
+      "featured": true,
+      "countInStock": 0
+    },
+    {
+      "id": "f36e",
+      "name": "House Coffee & Tea",
+      "price": 1000,
+      "category": "Bnah ",
+      "image": "https://i.pinimg.com/550x/e4/21/92/e42192b0682ede9d80d92260fb5e17cd.jpg",
+      "description": "nhu ren",
+      "discount": 11,
+      "featured": true,
+      "countInStock": 0
+    },
+    {
+      "id": "a552",
+      "name": "House Coffee & Tea",
+      "price": 2000,
+      "category": "Banh trang",
+      "image": "https://static.vinwonders.com/production/banh-trang-nuong-da-lat-1.jpg",
+      "description": "nhu tren",
+      "discount": 11111,
+      "featured": false,
+      "countInStock": 0
+    },
+    {
+      "id": "9c18",
+      "name": "hangdoan1412",
+      "price": 1000,
+      "category": "Banh trang",
+      "image": "https://statics.vinpearl.com/banh-trang-3_1628667598.jpg",
+      "description": "nhu tren",
+      "discount": 0,
+      "featured": false,
+      "countInStock": 0
+    }
+  ]
+}
