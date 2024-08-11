@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 export const createOrder = async (req, res) => {
     try {
         const { userId, items, totalPrice, customerInfo } = req.body;
+        // console.log(req.body)
         const order = await Order.create({ userId, items, totalPrice, customerInfo });
         return res.status(StatusCodes.CREATED).json(order);
     } catch (error) {

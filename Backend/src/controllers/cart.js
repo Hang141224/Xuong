@@ -4,8 +4,10 @@ import Cart from "../models/cart";
 // Lấy danh sách sản phẩm thuộc 1 user
 export const getCartByUserId = async (req, res) => {
     const { userId } = req.params;
+    // console.log(userId)
     try {
-        const cart = await Cart.findOne({ userId }).populate("products.productId");
+        const cart = await Cart.findOne({ userId: userId }).populate("products.productId");
+        console.log(cart)
         const cartData = {
             products: cart.products.map((item) => ({
                 productId: item.productId._id,
@@ -15,33 +17,38 @@ export const getCartByUserId = async (req, res) => {
                 image: item.productId.image
             })),
         };
-        return res.status(StatusCodes.OK).json(cartData);
+        return res.status(StatusCodes.OK).json(cart);
     } catch (error) { }
 };
 // Thêm sản phẩm vào giỏ hàng
 export const addItemToCart = async (req, res) => {
     const { userId, productId, quanlity } = req.body;
+    // console.log(req.body)
     try {
         // kiểm tra giỏ hàng có tồn tại chưa? dựa theo UserId
         let cart = await Cart.findOne({ userId });
+
         // nếu giỏ hàng không tồn tại thì chúng ta tạo mới
         if (!cart) {
             cart = new Cart({ userId, products: [] });
         }
+
         const existProductIndex = cart.products.findIndex(
             (item) => item.productId.toString() == productId
         );
-
+        console.log(existProductIndex)
         // kiểm tra xem sản có tồn tại trong giỏ hàng không?
         if (existProductIndex !== -1) {
             // nếu mà sản phẩm tồn tại trong giỏ hàng thì chúng ta cập nhật số lượng
             cart.products[existProductIndex].quanlity += quanlity;
         } else {
             // nếu sản phẩm chưa có trong giỏ hàng thì chúng ta thêm mới
-            cart.products.push({ productId, quanlity });
+            cart.products.push({ productId: productId, quanlity: quanlity });
         }
+        // console.log(cart)
         await cart.save();
-        return res.status(StatusCodes.OK).json({ cart });
+
+        return res.status(StatusCodes.OK).json(cart);
     } catch (error) {
         // trả về client lỗi
         return res.status(StatusCodes.BAD_REQUEST).json({ error: "Internal Server Error" });

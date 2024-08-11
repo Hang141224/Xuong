@@ -22,9 +22,9 @@ const Catergories = () => {
                     <div>
                         {categories?.map((category: { _id?: number; name: string }) => (
                             <div key={category._id}>
-                                <h3>
+                                <p>
                                     <Link to={`/categories/${category._id}`}>{category.name}</Link>
-                                </h3>
+                                </p>
                             </div>
                         ))}
                     </div>

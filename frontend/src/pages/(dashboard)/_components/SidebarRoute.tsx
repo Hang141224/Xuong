@@ -17,7 +17,7 @@ const routes = [
     {
         icon: List,
         label: "Danh muc",
-        href: "/admin/catrgories",
+        href: "/admin/categories",
     }
 ];
 

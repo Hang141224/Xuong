@@ -48,7 +48,7 @@ const ProductAdd = ({ onAdd }: ProductAddProps) => {
 
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Mô tả sản phẩm</label>
-                    <input type="number" {...register('description')} id="productPrice" className="form-control" />
+                    <textarea cols={30} rows={10} {...register('description')} id="productPrice" className="form-control" />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Thêm</button>

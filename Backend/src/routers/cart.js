@@ -6,8 +6,9 @@ const router = Router();
 
 router.get("/cart/:userId", getCartByUserId);
 router.post("/cart/add-to-cart", addItemToCart);
-router.post("/cart/update-cart", updateProductQuanlity);
+router.put("/cart/update-cart", updateProductQuanlity);
 router.post("/cart/remove-form-cart", removeFromCart);
 router.post("/cart/increase", increaseProductQuanlity);
 router.post("/cart/decrease", decreaseProductQuanlity);
+
 export default router;

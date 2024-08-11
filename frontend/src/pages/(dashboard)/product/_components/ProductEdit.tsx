@@ -25,7 +25,7 @@ const ProductEdit = ({ onEdit }: ProductEditProps) => {
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get(`http://localhost:8000/api/products/${id}`);
+            const { data } = await axios.get(`http://localhost:8000/api/v1/products/${id}`);
             reset(data);
         })();
     }, []);

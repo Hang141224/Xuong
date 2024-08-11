@@ -33,16 +33,16 @@ const CartPage = () => {
                                         return (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
-                                                <td><img src={product.image} className="cart-product" /></td>
+                                                <td><img src={product.productId.image} className="cart-product" /></td>
                                                 {/* <td>{product.name}</td> */}
-                                                <td>{product.price}</td>
+                                                <td>{product.productId.price}</td>
                                                 <td className="cart-color">
                                                     <button
                                                         className='py-1 px-2 bg-emerald-100'
                                                         onClick={() =>
                                                             mutate({
                                                                 action: 'DECREMENT',
-                                                                productId: product.productId
+                                                                productId: product.productId?._id
                                                             })
                                                         }
                                                     >
@@ -67,7 +67,7 @@ const CartPage = () => {
                                                         onClick={() =>
                                                             mutate({
                                                                 action: 'INCREMENT',
-                                                                productId: product.productId
+                                                                productId: product.productId?._id
                                                             })
                                                         }
                                                     >
@@ -79,13 +79,13 @@ const CartPage = () => {
 
                                                 </td>
                                                 <td className="cart-color">
-                                                    {product.price * product.quanlity}
+                                                    {product.productId.price * product.quanlity}
                                                 </td>
                                                 <td
                                                     onClick={() =>
                                                         mutate({
                                                             action: 'REMOVE',
-                                                            productId: product.productId
+                                                            productId: product.productId?._id
                                                         })
                                                     }>
                                                     <img src={Delete} />
@@ -104,7 +104,7 @@ const CartPage = () => {
                             </div>
                             <div className="cart-total">
                                 <span className="cart-total__black">Total</span>
-                                <span className="cart-total__yellow">Total: ${calculateTotal()}</span>
+                                <span className="cart-total__yellow"> ${calculateTotal()}</span>
                             </div>
                             <div className="check-cart">
                                 <Link to={`/order`}><button className="check-out">Check Out</button></Link>

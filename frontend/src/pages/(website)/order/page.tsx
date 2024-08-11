@@ -6,9 +6,11 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useLocalStorage } from "@/common/hooks/userStorage";
 import { IProduct } from "@/common/types/products";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {
-    const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [user] = useLocalStorage("user", {});
     const userId = user?.user?._id;
     const { data, calculateTotal } = useCart();
@@ -19,26 +21,32 @@ const OrderPage = () => {
             totalPrice: number;
             customerInfo: object;
         }) => {
-            const { data } = await axios.post(
-                "http://localhost:8000/api/v1/orders",
-                order,
-            );
+            // console.log(order)
+            const { data } = await axios.post("http://localhost:8000/api/v1/orders", order);
             return data;
         },
         onSuccess: () => {
-            // navigate("/thankyou")
             alert("Đặt hàng thành công");
+            navigate("/");
         },
     });
 
     const onSubmit = (formData: object) => {
         mutate({
             userId,
-            items: data?.products,
+            items: data?.products.map((item: any) => {
+                return {
+                    name: item.productId.name,
+                    price: item.productId.price,
+                    quantity: item.quanlity
+                }
+            }),
             totalPrice: calculateTotal(),
             customerInfo: formData,
         });
     };
+
+    // console.log(data?.products)
 
     return (
         <div className="container mx-auto">
@@ -50,42 +58,56 @@ const OrderPage = () => {
                             <label>Name</label>
                             <Input
                                 placeholder="Tên"
-                                {...register("name")}
+                                {...register("name", { required: "Name is required" })}
                             />
+                            {errors.name && (
+                                <span className='text-danger'>{errors.name.message}</span>
+                            )}
+
                         </div>
                         <div>
                             <label>Số điện thoại</label>
                             <Input
                                 type="tel"
                                 placeholder="Số điện thoại"
-                                {...register("phone")}
+                                {...register("phone", { required: "Phone is required" })}
                             />
+                            {errors.phone && (
+                                <span className='text-danger'>{errors?.phone.message}</span>
+                            )}
                         </div>
+
                         <div>
                             <label>Email</label>
                             <Input
                                 type="email"
                                 placeholder="Email của bạn"
-                                {...register("email")}
+                                {...register("email", { required: "Email is required" })}
                             />
+                            {errors?.email?.message && (
+                                <span className='text-danger'>{errors.email.message}</span>
+                            )}
+
                         </div>
                         <Button type="submit">Hoàn thành đơn hàng</Button>
                     </form>
                 </div>
+
                 <div className="col-span-4">
+                    <h2 className="text-danger">Thanh toán</h2>
                     {data?.products?.map((item: IProduct) => (
-                        <div key={item._id} className="border-b py-4">
-                            <h4>{item.name}</h4>
-                            <p>Giá: {item.price}</p>
-                            <p>Số lượng:{item.quanlity}</p>
+                        <div key={item._id} className="border-b py-2">
+                            <h5>{item.productId.name}</h5>
+                            <p>Giá: {item.productId?.price}</p>
+                            <p>Số lượng: {item.quanlity}</p>
                         </div>
                     ))}
-                    <p className="mt-5">
-                        <strong className="mr-2">Sản phẩm:</strong>
+                    <p className="mt-4">
+                        <strong className="mr-2">Số lượng sản phẩm:</strong>
                         {data?.products ? data?.products.length : 0}
                     </p>
                     <p>
-                        <strong className="mr-2">tổng tiền:</strong>{" "}
+                        <strong className="mr-2">Tổng tiền:</strong>{" "}
                         {calculateTotal()}
                     </p>
                 </div>

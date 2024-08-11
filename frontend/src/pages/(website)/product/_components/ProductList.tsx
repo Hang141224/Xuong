@@ -4,6 +4,7 @@ import { IProduct } from '@/common/types/products'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useLocalStorage } from '@/common/hooks/userStorage'
+import { useEffect, useState } from 'react'
 type ProductListProps = {
     products?: IProduct[]
     pagination?: {
@@ -14,6 +15,7 @@ type ProductListProps = {
 }
 
 const ProductList = ({ pagination }: ProductListProps) => {
+    const [userId, setUserId] = useState('')
     const { data: products } = useQuery({
         queryKey: ['GET_PRODUCTS'],
         queryFn: async () => {
@@ -22,17 +24,27 @@ const ProductList = ({ pagination }: ProductListProps) => {
         }
     })
     const queryClient = useQueryClient();
-    const [user] = useLocalStorage('user', {});
-    const userId = user?.user?._id;
+    // const [user] = useLocalStorage('user', {});
+    // const userId = user?.user?._id;
+    const user = localStorage.getItem('user') || null;
+
+
+    useEffect(() => {
+        if (user && user != null) {
+            const userInfo = JSON.parse(user);
+            setUserId(userInfo.user._id)
+        }
+    }, [user])
+    console.log(userId)
     const { mutate } = useMutation({
-        mutationFn: async ({ productId, quanlity }: { productId: string, quanlity: number }) => {
+        mutationFn: async ({ productId, quanlity, userId }: { userId: string, productId: string, quanlity: number }) => { //cái userID đâu....
             const { data } = await axios.post(`http://localhost:8000/api/v1/cart/add-to-cart`, {
                 userId,
                 productId,
                 quanlity,
             });
             return data;
-            // console.log(userId, productId, quanlity)
+            // console.log(userId, productId, quanlity);
         },
         onSuccess: () => {
             alert("Them thanh cong");
@@ -76,7 +88,13 @@ const ProductList = ({ pagination }: ProductListProps) => {
                                 </Link>
                                 <button
                                     className='btn product-action__add_to_cart'
-                                    onClick={() => mutate({ productId: product?._id, quanlity: 1 })}
+                                    onClick={() => {
+                                        if (userId && userId != '') {
+                                            mutate({ productId: product?._id, quanlity: 1, userId: userId })
+                                        } else {
+                                            alert('Bạn cần đăng nhập')
+                                        }
+                                    }}
                                 >
                                     Add To Cart
                                 </button>

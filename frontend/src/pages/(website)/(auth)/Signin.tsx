@@ -5,6 +5,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import Joi from 'joi'
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useNavigate } from 'react-router-dom';
 
 
 const signinSchema = Joi.object({
@@ -14,7 +15,7 @@ const signinSchema = Joi.object({
 })
 
 const Signin = () => {
-    const [, setUser] = useLocalStorage("user", {})
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: joiResolver(signinSchema),
         defaultValues: {
@@ -28,7 +29,12 @@ const Signin = () => {
             const { data } = await axios.post(`http://localhost:8000/api/v1/auth/signin`, formData);
             return data;
         },
-        onSuccess: (data) => setUser(data),
+        onSuccess: (data) => {
+            localStorage.setItem('user', JSON.stringify(data));
+            alert("Dang nhap thanh cong");
+            navigate(`/`);
+        },
+
         onError: (error) => console.log(error),
 
     });

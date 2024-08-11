@@ -13,8 +13,9 @@ const useCart = () => {
     const { data, ...restQuery } = useQuery({
         queryKey: ['cart', userId],
         queryFn: async () => {
-            const { data } = await axios.get(`http://localhost:8000/api/v1/cart/${userId}`)
-            return data
+            const response = await axios.get(`http://localhost:8000/api/v1/cart/${userId}`);
+            // console.log(data);
+            return response.data;
         }
     })
 
@@ -65,7 +66,7 @@ const useCart = () => {
     }
     const calculateTotal = () => {
         if (!data || !data.products) return 0
-        return reduce(data.products, (total, product) => total + product.price * product.quanlity, 0)
+        return reduce(data.products, (total, product) => total + product.productId.price * product.quanlity, 0)
     }
 
     return {

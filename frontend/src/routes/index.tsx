@@ -1,6 +1,4 @@
 import LayoutAdmin from "@/pages/(dashboard)/layout";
-// import FormProduct from "@/pages/(dashboard)/product/_components/Form";
-// import ProductManagement from "@/pages/(dashboard)/product/page";
 import Signin from "@/pages/(website)/(auth)/Signin";
 import AboutPage from "@/pages/(website)/about/page";
 import ContactPage from "@/pages/(website)/contact/page";
@@ -19,9 +17,12 @@ import axios from "axios";
 import { IProduct } from "@/interfaces/product";
 import { useEffect, useState } from "react";
 import ProductsList from "@/pages/(dashboard)/product/_components/ProductList";
-
 import ProductEdit from "@/pages/(dashboard)/product/_components/ProductEdit";
 import ProductAdd from "@/pages/(dashboard)/product/_components/Productadd";
+import CategoryList from "@/pages/(dashboard)/categories/CategoryList";
+import CategoryAdd from "@/pages/(dashboard)/categories/CategoryAdd";
+import CategoryEdit from "@/pages/(dashboard)/categories/CategoryEdit";
+import Signup from "@/pages/(website)/(auth)/Signup";
 
 const Router = () => {
     const [products, setProducts] = useState<IProduct[]>([]);
@@ -82,6 +83,7 @@ const Router = () => {
                     <Route path="about" element={<AboutPage />} />
                     <Route path="contact" element={<ContactPage />} />
                     <Route path="signin" element={<Signin />} />
+                    <Route path="signup" element={<Signup />} />
                     <Route path="cart" element={<CartPage />} />
                     <Route path="order" element={<OrderPage />} />
                 </Route>
@@ -96,6 +98,9 @@ const Router = () => {
                     <Route path="products" element={<ProductsList products={products} onRemove={onHandleRemove} />} />
                     <Route path="products/add" element={<ProductAdd onAdd={onHandleAdd} />} />
                     <Route path="products/:id/edit" element={<ProductEdit onEdit={onHandleEdit} />} />
+                    <Route path="categories" element={< CategoryList />} />
+                    <Route path="categories/add" element={< CategoryAdd />} />
+                    <Route path="categories/:id/edit" element={< CategoryEdit />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
